@@ -11,8 +11,6 @@ public class Food : MonoBehaviour
 
     public void RandomizePosition()
     {
-        if (gridArea == null) return;
-
         Bounds bounds = gridArea.bounds;
 
         for (int i = 0; i < 20; i++)
@@ -21,18 +19,29 @@ public class Food : MonoBehaviour
             float y = Mathf.Round(Random.Range(bounds.min.y, bounds.max.y));
             Vector3 newPos = new Vector3(x, y, 0f);
 
-            if (!Physics2D.OverlapCircle(newPos, 0.2f, 1 << 0))
+            if (!IsPositionOccupied(newPos))
             {
-                this.transform.position = newPos;
+                transform.position = newPos;
                 return;
             }
         }
 
-        this.transform.position = new Vector3(
+        transform.position = new Vector3(
             Mathf.Round(Random.Range(bounds.min.x, bounds.max.x)),
             Mathf.Round(Random.Range(bounds.min.y, bounds.max.y)),
             0f
         );
+    }
+
+    private bool IsPositionOccupied(Vector3 position)
+    {
+        Collider2D hit = Physics2D.OverlapCircle(position, 0.3f);
+
+        if (hit != null && hit.gameObject != this.gameObject && hit.name != "GridArea")
+        {
+            return true;
+        }
+        return false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -226,6 +226,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SnakeMovement
   speed: 0.15
+  segmentPrefab: {fileID: 8349866826610166511, guid: a854a9175d87f3f4db4868793fe2f599, type: 3}
+  bodySprite: {fileID: -4964329033311366487, guid: 37b918214f5b44440a6b31a15756e76d, type: 3}
+  tailSprite: {fileID: 5086295352224038941, guid: a058f4f9c8d35354083915cf43867516, type: 3}
 --- !u!50 &252320292
 Rigidbody2D:
   serializedVersion: 5
