@@ -11,7 +11,7 @@ public class SnakeMovement : MonoBehaviour
     public Sprite bodySprite;
     public Sprite tailSprite; 
 
-    private List<Transform> _segments = new List<Transform>();
+    public List<Transform> _segments = new List<Transform>();
 
     void Start()
     {

@@ -3,6 +3,7 @@ using UnityEngine;
 public class Food : MonoBehaviour
 {
     public BoxCollider2D gridArea;
+    public SnakeMovement snake;
 
     private void Start()
     {
@@ -11,37 +12,27 @@ public class Food : MonoBehaviour
 
     public void RandomizePosition()
     {
-        Bounds bounds = gridArea.bounds;
+        Bounds bounds = this.gridArea.bounds;
+        float x, y;
+        bool isOccupied;
 
-        for (int i = 0; i < 20; i++)
+        do
         {
-            float x = Mathf.Round(Random.Range(bounds.min.x, bounds.max.x));
-            float y = Mathf.Round(Random.Range(bounds.min.y, bounds.max.y));
-            Vector3 newPos = new Vector3(x, y, 0f);
+            isOccupied = false;
+            x = Mathf.Round(Random.Range(bounds.min.x, bounds.max.x));
+            y = Mathf.Round(Random.Range(bounds.min.y, bounds.max.y));
 
-            if (!IsPositionOccupied(newPos))
+            foreach (Transform segment in snake._segments)
             {
-                transform.position = newPos;
-                return;
+                if (segment.position.x == x && segment.position.y == y)
+                {
+                    isOccupied = true;
+                    break;
+                }
             }
-        }
+        } while (isOccupied);
 
-        transform.position = new Vector3(
-            Mathf.Round(Random.Range(bounds.min.x, bounds.max.x)),
-            Mathf.Round(Random.Range(bounds.min.y, bounds.max.y)),
-            0f
-        );
-    }
-
-    private bool IsPositionOccupied(Vector3 position)
-    {
-        Collider2D hit = Physics2D.OverlapCircle(position, 0.3f);
-
-        if (hit != null && hit.gameObject != this.gameObject && hit.name != "GridArea")
-        {
-            return true;
-        }
-        return false;
+        this.transform.position = new Vector3(x, y, 0.0f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
