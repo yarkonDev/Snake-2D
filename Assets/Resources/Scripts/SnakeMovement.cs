@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SnakeMovement : MonoBehaviour
 {
@@ -9,18 +10,26 @@ public class SnakeMovement : MonoBehaviour
     [Header("Настройки тела")]
     public GameObject segmentPrefab;
     public Sprite bodySprite;
-    public Sprite tailSprite; 
+    public Sprite tailSprite;
 
-    public List<Transform> _segments = new List<Transform>();
+    [Header("Настройки проигрыша")]
+    public GameObject gameOverPanel;
+    public Sprite deadHeadSprite;
+
+    private List<Transform> _segments = new List<Transform>();
+    private bool _isDead = false;
 
     void Start()
     {
+        Time.timeScale = 1;
         _segments.Add(this.transform);
         InvokeRepeating(nameof(Move), speed, speed);
     }
 
     void Update()
     {
+        if (_isDead) return;
+
         if (Input.GetKeyDown(KeyCode.W) && _direction != Vector2.down)
         {
             _direction = Vector2.up; transform.rotation = Quaternion.Euler(0, 0, 90);
@@ -41,6 +50,8 @@ public class SnakeMovement : MonoBehaviour
 
     void Move()
     {
+        if (_isDead) return;
+
         for (int i = _segments.Count - 1; i > 0; i--)
         {
             _segments[i].position = _segments[i - 1].position;
@@ -61,15 +72,7 @@ public class SnakeMovement : MonoBehaviour
         for (int i = 1; i < _segments.Count; i++)
         {
             SpriteRenderer sr = _segments[i].GetComponent<SpriteRenderer>();
-
-            if (i == _segments.Count - 1)
-            {
-                sr.sprite = tailSprite;
-            }
-            else
-            {
-                sr.sprite = bodySprite;
-            }
+            sr.sprite = (i == _segments.Count - 1) ? tailSprite : bodySprite;
         }
     }
 
@@ -77,7 +80,31 @@ public class SnakeMovement : MonoBehaviour
     {
         GameObject segment = Instantiate(segmentPrefab);
         segment.transform.position = _segments[_segments.Count - 1].position;
+
+        StartCoroutine(EnableCollider(segment.GetComponent<Collider2D>()));
+
         _segments.Add(segment.transform);
+    }
+    private System.Collections.IEnumerator EnableCollider(Collider2D col)
+    {
+        col.enabled = false;
+        yield return new WaitForSeconds(0.2f);
+        col.enabled = true;
+    }
+
+    void Die()
+    {
+        _isDead = true;
+        CancelInvoke(nameof(Move));
+
+        GetComponent<SpriteRenderer>().sprite = deadHeadSprite;
+        gameOverPanel.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -86,5 +113,10 @@ public class SnakeMovement : MonoBehaviour
         {
             Grow();
         }
+        else if (other.CompareTag("Obstacle"))
+        {
+            Die();
+        }
     }
+    public List<Transform> GetSegments() { return _segments; }
 }
