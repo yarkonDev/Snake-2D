@@ -16,6 +16,8 @@ public class SnakeMovement : MonoBehaviour
     public GameObject gameOverPanel;
     public Sprite deadHeadSprite;
 
+    public ScoreManager scoreManager;
+
     private List<Transform> _segments = new List<Transform>();
     private bool _isDead = false;
 
@@ -112,6 +114,7 @@ public class SnakeMovement : MonoBehaviour
         if (other.CompareTag("Food"))
         {
             Grow();
+            scoreManager.AddScore(1);
         }
         else if (other.CompareTag("Obstacle"))
         {

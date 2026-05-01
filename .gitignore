@@ -3,19 +3,40 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
-/[Logs]/
-/[MemoryCaptures]/
-/UserSettings/
+/[Ll]ogs/
+/[Mm]emoryCaptures/
+/Assets/AddressableAssetsData/*/*.bin
+
+# Пропускать локальные файлы настроек
+/[Uu]ser[Ss]ettings/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.sln
 *.csproj
 *.unityproj
-*.sln
-*.suo
+*.csproj
 *.tmp
 *.user
 *.userprefs
 *.pidb
 *.booproj
-*.svclog
+*.svd
 *.pdb
+*.mdb
 *.opendb
-*.IDB
+*.VC.db
+
+# ОС файлы
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+Logs/
+*.log
+[Ll]ogs/
