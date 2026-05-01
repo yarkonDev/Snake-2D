@@ -121,5 +121,11 @@ public class SnakeMovement : MonoBehaviour
             Die();
         }
     }
+
+    public void GoToMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("MainMenu");
+    }
     public List<Transform> GetSegments() { return _segments; }
 }
