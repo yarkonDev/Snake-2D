@@ -3,21 +3,46 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    public TextMeshProUGUI scoreTextMenu;
     public TextMeshProUGUI scoreTextGame;
+    public TextMeshProUGUI scoreTextMenu;
+    public TextMeshProUGUI bestScoreText;
+    public TextMeshProUGUI goldApplesText;
+
     private int _score = 0;
+
+    void Awake() { UpdateVisuals(); }
+    void Start() { _score = 0; UpdateVisuals(); }
 
     public void AddScore(int amount)
     {
         _score += amount;
-        scoreTextMenu.text = _score.ToString();
-        scoreTextGame.text = _score.ToString();
+        int best = PlayerPrefs.GetInt("BestScore", 0);
+        if (_score > best)
+        {
+            PlayerPrefs.SetInt("BestScore", _score);
+            PlayerPrefs.Save();
+        }
+        UpdateVisuals();
     }
 
-    public void ResetScore()
+    public void AddGoldApple()
     {
-        _score = 0;
-        scoreTextMenu.text = "0";
-        scoreTextGame.text = "0";
+        int gold = PlayerPrefs.GetInt("GoldApples", 0) + 1;
+        PlayerPrefs.SetInt("GoldApples", gold);
+        PlayerPrefs.Save();
+        UpdateVisuals();
+    }
+
+    public void UpdateVisuals()
+    {
+        if (scoreTextMenu != null)
+        {
+            scoreTextMenu.text = _score.ToString();
+        }
+        if (scoreTextGame) scoreTextGame.text = _score.ToString();
+        if (scoreTextMenu) scoreTextMenu.text = _score.ToString();
+
+        if (goldApplesText) goldApplesText.text = PlayerPrefs.GetInt("GoldApples", 0).ToString();
+        if (bestScoreText) bestScoreText.text = PlayerPrefs.GetInt("BestScore", 0).ToString();
     }
 }

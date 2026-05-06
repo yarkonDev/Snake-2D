@@ -98,9 +98,10 @@ public class SnakeMovement : MonoBehaviour
     {
         _isDead = true;
         CancelInvoke(nameof(Move));
-
         GetComponent<SpriteRenderer>().sprite = deadHeadSprite;
+
         gameOverPanel.SetActive(true);
+        if(scoreManager != null) scoreManager.UpdateVisuals();
         Time.timeScale = 0;
     }
 

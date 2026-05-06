@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cc38b6ab2347fe54b93ef0a3b8022113
+guid: 52c9751e694f2ba418ad88093eaa7464
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1134441946568293393
-    second: GoldApple_0
+      213: 2881095069560235508
+    second: AppleScore_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 300
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GoldApple_0
+      name: AppleScore_0
       rect:
         serializedVersion: 2
-        x: 143
-        y: 143
-        width: 210
-        height: 258
+        x: 0
+        y: 0
+        width: 592
+        height: 224
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 11c718b90f85ebf00800000000000000
-      internalID: 1134441946568293393
+      spriteID: 4f5644973b4bbf720800000000000000
+      internalID: 2881095069560235508
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      GoldApple_0: 1134441946568293393
+      AppleScore_0: 2881095069560235508
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

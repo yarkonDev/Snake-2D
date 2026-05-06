@@ -4,6 +4,21 @@ public class Food : MonoBehaviour
 {
     public BoxCollider2D gridArea;
     public SnakeMovement snake;
+    public ScoreManager scoreManager;
+
+    [Header("Настройки спрайтов")]
+    public Sprite redAppleSprite;
+    public Sprite goldAppleSprite;
+
+    private SpriteRenderer _spriteRenderer;
+    private bool _isGolden = false;
+
+    private int _applesEatenInRound = 0;
+
+    private void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     private void Start()
     {
@@ -12,13 +27,28 @@ public class Food : MonoBehaviour
 
     public void RandomizePosition()
     {
-        if (snake == null || gridArea == null) return;
+        _applesEatenInRound++;
 
-        Bounds bounds = this.gridArea.bounds;
+        if (_applesEatenInRound == 1)
+        {
+            _isGolden = false;
+        }
+        else if (_applesEatenInRound == 13)
+        {
+            _isGolden = true;
+            _applesEatenInRound = 6;
+        }
+        else
+        {
+            _isGolden = Random.Range(1, 11) == 1;
+        }
+
+        _spriteRenderer.sprite = _isGolden ? goldAppleSprite : redAppleSprite;
+
+        Bounds bounds = gridArea.bounds;
         float x, y;
         bool isOccupied;
 
-        int attempts = 0;
         do
         {
             isOccupied = false;
@@ -33,16 +63,21 @@ public class Food : MonoBehaviour
                     break;
                 }
             }
-            attempts++;
-        } while (isOccupied && attempts < 100);
+        } while (isOccupied);
 
-        this.transform.position = new Vector3(x, y, 0.0f);
+        transform.position = new Vector3(x, y, 0.0f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
+            if (_isGolden)
+            {
+                scoreManager.AddGoldApple();
+            }
+
+
             RandomizePosition();
         }
     }

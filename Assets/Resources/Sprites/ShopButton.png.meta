@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: cc38b6ab2347fe54b93ef0a3b8022113
+guid: a48848b93b195cc47a74e02273445c2e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1134441946568293393
-    second: GoldApple_0
+      213: -8678435745122928177
+    second: ShopButton_0
+  - first:
+      213: -6787147696246827665
+    second: ShopButton_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 300
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GoldApple_0
+      name: ShopButton_0
       rect:
         serializedVersion: 2
-        x: 143
-        y: 143
-        width: 210
-        height: 258
+        x: 0
+        y: 471
+        width: 960
+        height: 482
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +131,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 11c718b90f85ebf00800000000000000
-      internalID: 1134441946568293393
+      spriteID: fc935ed8ba0009780800000000000000
+      internalID: -8678435745122928177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShopButton_1
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 0
+        width: 610
+        height: 449
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f65d81f41253fc1a0800000000000000
+      internalID: -6787147696246827665
       vertices: []
       indices: 
       edges: []
@@ -148,7 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      GoldApple_0: 1134441946568293393
+      ShopButton_0: -8678435745122928177
+      ShopButton_1: -6787147696246827665
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
