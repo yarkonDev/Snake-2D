@@ -7,6 +7,7 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI scoreTextMenu;
     public TextMeshProUGUI bestScoreText;
     public TextMeshProUGUI goldApplesText;
+    public TextMeshProUGUI goldApplesShopText;
 
     private int _score = 0;
 
@@ -35,14 +36,13 @@ public class ScoreManager : MonoBehaviour
 
     public void UpdateVisuals()
     {
-        if (scoreTextMenu != null)
-        {
-            scoreTextMenu.text = _score.ToString();
-        }
+        if (scoreTextMenu != null) scoreTextMenu.text = _score.ToString();
         if (scoreTextGame) scoreTextGame.text = _score.ToString();
         if (scoreTextMenu) scoreTextMenu.text = _score.ToString();
 
         if (goldApplesText) goldApplesText.text = PlayerPrefs.GetInt("GoldApples", 0).ToString();
         if (bestScoreText) bestScoreText.text = PlayerPrefs.GetInt("BestScore", 0).ToString();
+        if (goldApplesShopText != null) goldApplesShopText.text = PlayerPrefs.GetInt("GoldApples", 0).ToString();
+
     }
 }
