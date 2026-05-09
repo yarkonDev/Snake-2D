@@ -48,6 +48,14 @@ public class SnakeMovement : MonoBehaviour
         {
             _direction = Vector2.right; transform.rotation = Quaternion.Euler(0, 0, 0);
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (!gameOverPanel.activeSelf)
+            {
+                Time.timeScale = 1f;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
     }
 
     void Move()
