@@ -50,7 +50,9 @@ public class SnakeMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (!gameOverPanel.activeSelf)
+            bool canRestart = PlayerPrefs.GetInt("REnabled", 0) == 1;
+
+            if (canRestart && !gameOverPanel.activeSelf)
             {
                 Time.timeScale = 1f;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
