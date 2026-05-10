@@ -28,6 +28,12 @@ public class SnakeMovement : MonoBehaviour
         InvokeRepeating(nameof(Move), speed, speed);
     }
 
+    public void UpdateSpeed()
+    {
+        CancelInvoke(nameof(Move));
+        InvokeRepeating(nameof(Move), speed, speed);
+    }
+
     void Update()
     {
         if (_isDead) return;
