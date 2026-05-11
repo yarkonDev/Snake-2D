@@ -16,6 +16,7 @@ public class SnakeMovement : MonoBehaviour
     public GameObject gameOverPanel;
     public Sprite deadHeadSprite;
 
+    [Header("Остальное")]
     public ScoreManager scoreManager;
 
     private List<Transform> _segments = new List<Transform>();
@@ -53,16 +54,6 @@ public class SnakeMovement : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.D) && _direction != Vector2.left)
         {
             _direction = Vector2.right; transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            bool canRestart = PlayerPrefs.GetInt("REnabled", 0) == 1;
-
-            if (canRestart && !gameOverPanel.activeSelf)
-            {
-                Time.timeScale = 1f;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
         }
     }
 
@@ -106,7 +97,14 @@ public class SnakeMovement : MonoBehaviour
     private System.Collections.IEnumerator EnableCollider(Collider2D col)
     {
         col.enabled = false;
-        yield return new WaitForSeconds(0.2f);
+        if (1 > _segments.Count)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
         col.enabled = true;
     }
 

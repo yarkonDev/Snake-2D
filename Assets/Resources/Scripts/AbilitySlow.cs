@@ -2,15 +2,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class AbilitySpeed : MonoBehaviour
+public class AbilitySlow : MonoBehaviour
 {
     [Header("Ссылки")]
     public SnakeMovement snake;
-    public AbilitySlow slowAbility;
-    public GameObject speedIcon;
+    public AbilitySpeed speedAbility;
+    public GameObject slowIcon;
     public Image durationBar;
     public Image cooldownDim;
-    public GameObject lightningEffect;
+    public GameObject slowEffect;
 
     [Header("Настройки")]
     public float duration = 5f;
@@ -26,9 +26,9 @@ public class AbilitySpeed : MonoBehaviour
     void Start()
     {
         _normalSpeed = snake.speed;
-        _isUnlocked = PlayerPrefs.GetInt("SpeedAbility", 0) == 1;
+        _isUnlocked = PlayerPrefs.GetInt("SlowAbility", 0) == 1;
 
-        if (speedIcon) speedIcon.SetActive(_isUnlocked);
+        if (slowIcon) slowIcon.SetActive(_isUnlocked);
         ResetVisuals();
     }
 
@@ -48,13 +48,13 @@ public class AbilitySpeed : MonoBehaviour
 
         if (!_isUnlocked || !_canUse || _isActive) return;
 
-        if (Input.GetKeyDown(KeyCode.Q)) Activate();
+        if (Input.GetKeyDown(KeyCode.E)) Activate();
     }
 
     public void Activate()
     {
-        if (slowAbility != null) slowAbility.ForceStop();
-        _activeRoutine = StartCoroutine(SpeedRoutine());
+        if (speedAbility != null) speedAbility.ForceStop();
+        _activeRoutine = StartCoroutine(SlowRoutine());
     }
 
     public void ForceStop()
@@ -69,15 +69,15 @@ public class AbilitySpeed : MonoBehaviour
         snake.UpdateSpeed();
     }
 
-    IEnumerator SpeedRoutine()
+    IEnumerator SlowRoutine()
     {
         _isActive = true;
         _canUse = false;
 
-        if (lightningEffect) lightningEffect.SetActive(true);
+        if (slowEffect) slowEffect.SetActive(true);
         if (durationBar) { durationBar.gameObject.SetActive(true); durationBar.fillAmount = 1f; }
 
-        snake.speed = _normalSpeed / 1.3f;
+        snake.speed = _normalSpeed * 1.75f;
         snake.UpdateSpeed();
 
         float elapsed = 0;
@@ -94,7 +94,7 @@ public class AbilitySpeed : MonoBehaviour
 
     void ResetVisuals()
     {
-        if (lightningEffect) lightningEffect.SetActive(false);
+        if (slowEffect) slowEffect.SetActive(false);
         if (durationBar) durationBar.gameObject.SetActive(false);
     }
 }
