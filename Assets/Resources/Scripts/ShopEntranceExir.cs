@@ -4,6 +4,7 @@ public class ShopEntranceExir : MonoBehaviour
 {
     [Header("Магазин")]
     public GameObject shopPanel;
+    public GameObject shopWarning;
 
     public void OpenShop()
     {
@@ -12,6 +13,7 @@ public class ShopEntranceExir : MonoBehaviour
 
     public void CloseShop()
     {
+        shopWarning.SetActive(false);
         shopPanel.SetActive(false);
     }
 }

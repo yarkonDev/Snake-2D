@@ -9,10 +9,21 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI goldApplesText;
     public TextMeshProUGUI goldApplesShopText;
 
+    public GameObject Apple_Extra;
+
     private int _score = 0;
 
     void Awake() { UpdateVisuals(); }
-    void Start() { _score = 0; UpdateVisuals(); }
+    void Start() 
+    {
+        _score = 0; UpdateVisuals();
+        bool isDoubleAppleBought = PlayerPrefs.GetInt("DoubleApple", 0) == 1;
+
+        if (Apple_Extra != null)
+        {
+            Apple_Extra.SetActive(isDoubleAppleBought);
+        }
+    }
 
     public void AddScore(int amount)
     {

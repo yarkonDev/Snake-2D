@@ -29,6 +29,9 @@ public class Food : MonoBehaviour
     {
         _applesEatenInRound++;
 
+        bool isDoubleAppleBought = PlayerPrefs.GetInt("DoubleApple", 0) == 1;
+        int chanceRange = isDoubleAppleBought ? 6 : 11;
+
         if (_applesEatenInRound == 1)
         {
             _isGolden = false;
@@ -40,7 +43,7 @@ public class Food : MonoBehaviour
         }
         else
         {
-            _isGolden = Random.Range(1, 11) == 1;
+            _isGolden = Random.Range(1, chanceRange) == 1;
         }
 
         _spriteRenderer.sprite = _isGolden ? goldAppleSprite : redAppleSprite;
