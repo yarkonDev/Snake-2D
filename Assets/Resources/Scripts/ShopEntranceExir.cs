@@ -7,7 +7,7 @@ public class ShopEntranceExir : MonoBehaviour
     public GameObject shopWarning;
 
     public void OpenShop()
-    {
+    { 
         shopPanel.SetActive(true); 
     }
 

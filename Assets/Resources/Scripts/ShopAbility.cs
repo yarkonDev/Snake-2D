@@ -3,10 +3,12 @@ using UnityEngine;
 public class ShopAbility : MonoBehaviour
 {
     public ScoreManager scoreManager;
+    public PurchaseFX explosionFX;
     public GameObject buyButton;
     public GameObject boughtButton;
-    public int price = 3;
-    public string saveKey = "SpeedUnlocked";
+    public GameObject priceList;
+    public int price = 1;
+    public string saveKey = "None";
     public ShopWarning warningScript;
 
     void Start()
@@ -14,6 +16,7 @@ public class ShopAbility : MonoBehaviour
         if (PlayerPrefs.GetInt(saveKey, 0) == 1)
         {
             buyButton.SetActive(false);
+            priceList.SetActive(false);
             boughtButton.SetActive(true);
         }
     }
@@ -25,10 +28,10 @@ public class ShopAbility : MonoBehaviour
         if (currentGold >= price)
         {
             currentGold -= price;
+            if (explosionFX != null) explosionFX.PlayEffect();
             PlayerPrefs.SetInt("GoldApples", currentGold);
             PlayerPrefs.SetInt(saveKey, 1);
             PlayerPrefs.Save();
-            buyButton.SetActive(false);
             boughtButton.SetActive(true);
             scoreManager.UpdateVisuals();
         }
