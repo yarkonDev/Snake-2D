@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class PurchaseFX : MonoBehaviour
 {
-    [Header("Сюда ничего тащить не нужно, код сам найдет частицы!")]
     private List<RectTransform> _particlesList = new List<RectTransform>();
 
     [Header("Звуковые эффекты")]
@@ -19,7 +18,6 @@ public class PurchaseFX : MonoBehaviour
         {
             _particlesList.Add(child);
         }
-        Debug.Log("PurchaseFX: Успешно найдено частиц в иерархии: " + _particlesList.Count);
     }
 
     public void PlayEffect()

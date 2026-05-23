@@ -11,6 +11,7 @@ public class AbilitySpeed : MonoBehaviour
     public Image durationBar;
     public Image cooldownDim;
     public GameObject lightningEffect;
+    public GameObject gameOverPanel;
 
     [Header("Настройки")]
     public float duration = 5f;
@@ -34,6 +35,11 @@ public class AbilitySpeed : MonoBehaviour
 
     void Update()
     {
+        if (snake == null || snake._isDead)
+        {
+            ForceStop();
+            return;
+        }
         if (_cooldownTimer > 0)
         {
             _cooldownTimer -= Time.deltaTime;
@@ -48,7 +54,7 @@ public class AbilitySpeed : MonoBehaviour
 
         if (!_isUnlocked || !_canUse || _isActive) return;
 
-        if (Input.GetKeyDown(KeyCode.Q)) Activate();
+        if (gameOverPanel.activeSelf == false) if (Input.GetKeyDown(KeyCode.E)) Activate();
     }
 
     public void Activate()

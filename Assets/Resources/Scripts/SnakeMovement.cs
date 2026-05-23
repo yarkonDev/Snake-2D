@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SnakeMovement : MonoBehaviour
 {
-    private Vector2 _direction = Vector2.right;
+    public Vector2 _direction = Vector2.right;
     public float speed = 0.1f;
 
     [Header("Настройки тела")]
@@ -19,12 +19,15 @@ public class SnakeMovement : MonoBehaviour
     [Header("Остальное")]
     public ScoreManager scoreManager;
 
-    private List<Transform> _segments = new List<Transform>();
-    private bool _isDead = false;
+    private bool _hasUsedReviveInThisRound = false;
+
+    public List<Transform> _segments = new List<Transform>();
+    public bool _isDead = false;
 
     void Start()
     {
         Time.timeScale = 1;
+        _hasUsedReviveInThisRound = false;
         _segments.Add(this.transform);
         InvokeRepeating(nameof(Move), speed, speed);
     }
@@ -60,6 +63,11 @@ public class SnakeMovement : MonoBehaviour
     void Move()
     {
         if (_isDead) return;
+        SnakeAI ai = GetComponent<SnakeAI>();
+        if (ai != null)
+        {
+            ai.ThinkBeforeMove();
+        }
 
         for (int i = _segments.Count - 1; i > 0; i--)
         {
@@ -103,13 +111,20 @@ public class SnakeMovement : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.4f);
         }
+        if (col == null || this == null) yield break;
         col.enabled = true;
     }
 
     void Die()
     {
+        bool hasRevivePerk = PlayerPrefs.GetInt("ReviveAbility", 0) == 1;
+        if (hasRevivePerk && !_hasUsedReviveInThisRound)
+        {
+            ExecuteRevive();
+            return;
+        }
         _isDead = true;
         CancelInvoke(nameof(Move));
         GetComponent<SpriteRenderer>().sprite = deadHeadSprite;
@@ -126,12 +141,21 @@ public class SnakeMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other == null || other.gameObject == null) return;
+        try
+        {
+            if (other.GetComponent<BoxCollider2D>() == null) return;
+        }
+        catch (UnityEngine.MissingReferenceException)
+        {
+            return;
+        }
         if (other.CompareTag("Food"))
         {
             Grow();
-            scoreManager.AddScore(1);
+            if (scoreManager != null) scoreManager.AddScore(1);
         }
-        else if (other.CompareTag("Obstacle"))
+        else if (other.CompareTag("Obstacle") || other.CompareTag("Player"))
         {
             Die();
         }
@@ -142,5 +166,28 @@ public class SnakeMovement : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
     }
+    void ExecuteRevive()
+    {
+        BoxCollider2D headCollider = GetComponent<BoxCollider2D>();
+        if (headCollider != null) headCollider.enabled = false;
+        _hasUsedReviveInThisRound = true;
+        transform.position = Vector3.zero;
+        for (int i = 1; i < _segments.Count; i++)
+        {
+            if (_segments[i] != null)
+            {
+                _segments[i].gameObject.tag = "Untagged";
+
+                BoxCollider2D col = _segments[i].GetComponent<BoxCollider2D>();
+                if (col != null) col.enabled = false;
+
+                Destroy(_segments[i].gameObject);
+            }
+        }
+        _segments.Clear();
+        _segments.Add(this.transform);
+        if (headCollider != null) headCollider.enabled = true;
+    }
+
     public List<Transform> GetSegments() { return _segments; }
 }
