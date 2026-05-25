@@ -19,6 +19,8 @@ public class SnakeMovement : MonoBehaviour
     [Header("Остальное")]
     public ScoreManager scoreManager;
 
+    public bool isInvincible = false;
+
     private bool _hasUsedReviveInThisRound = false;
 
     public List<Transform> _segments = new List<Transform>();
@@ -119,6 +121,7 @@ public class SnakeMovement : MonoBehaviour
 
     void Die()
     {
+        if (isInvincible) return;
         bool hasRevivePerk = PlayerPrefs.GetInt("ReviveAbility", 0) == 1;
         if (hasRevivePerk && !_hasUsedReviveInThisRound)
         {
