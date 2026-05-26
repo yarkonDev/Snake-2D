@@ -40,4 +40,20 @@ public class ShopAbility : MonoBehaviour
             warningScript.ShowWarning();
         }
     }
+    public void ForceUnlockWithFX()
+    {
+        if (PlayerPrefs.GetInt(saveKey, 0) == 1) return;
+
+        PlayerPrefs.SetInt(saveKey, 1);
+        PlayerPrefs.Save();
+
+        var explosion = GetComponentInChildren<PurchaseFX>();
+        if (explosion != null)
+        {
+            explosion.PlayEffect();
+        }
+        if (buyButton != null) buyButton.SetActive(false);
+        if (priceList != null) priceList.SetActive(false);
+        if (boughtButton != null) boughtButton.SetActive(true);
+    }
 }
