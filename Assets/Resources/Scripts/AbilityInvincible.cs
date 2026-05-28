@@ -10,6 +10,7 @@ public class AbilityInvincible : MonoBehaviour
     public Image durationBar;
     public Image cooldownDim;
     public GameObject visualEffect;
+    public GameObject QoLText;
 
     [Header("Настройки")]
     public float duration = 3f;
@@ -26,6 +27,7 @@ public class AbilityInvincible : MonoBehaviour
         _isUnlocked = PlayerPrefs.GetInt("NormalInvincible", 0) == 1;
 
         if (iconObject) iconObject.SetActive(_isUnlocked);
+        if (QoLText) QoLText.SetActive(_isUnlocked);
         ResetVisuals();
     }
 

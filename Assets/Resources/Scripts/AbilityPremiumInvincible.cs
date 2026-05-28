@@ -5,6 +5,7 @@ public class AbilityPremiumInvincible : MonoBehaviour
     [Header("Ссылки")]
     public SnakeMovement snake;
     public GameObject premiumIconObject;
+    public GameObject QoLText;
     public GameObject visualEffect;
 
     private bool _isUnlocked;
@@ -15,6 +16,7 @@ public class AbilityPremiumInvincible : MonoBehaviour
         _isUnlocked = PlayerPrefs.GetInt("PremiumInvincible", 0) == 1;
 
         if (premiumIconObject) premiumIconObject.SetActive(_isUnlocked);
+        if (QoLText) QoLText.SetActive(_isUnlocked);
         if (visualEffect) visualEffect.SetActive(false);
     }
 

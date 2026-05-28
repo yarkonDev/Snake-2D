@@ -12,6 +12,7 @@ public class AbilitySlow : MonoBehaviour
     public Image cooldownDim;
     public GameObject slowEffect;
     public GameObject gameOverPanel;
+    public GameObject QoLText;
 
     [Header("Настройки")]
     public float duration = 5f;
@@ -30,6 +31,7 @@ public class AbilitySlow : MonoBehaviour
         _isUnlocked = PlayerPrefs.GetInt("SlowAbility", 0) == 1;
 
         if (slowIcon) slowIcon.SetActive(_isUnlocked);
+        if (QoLText) QoLText.SetActive(_isUnlocked);
         ResetVisuals();
     }
 

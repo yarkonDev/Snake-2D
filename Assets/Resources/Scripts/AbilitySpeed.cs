@@ -12,6 +12,7 @@ public class AbilitySpeed : MonoBehaviour
     public Image cooldownDim;
     public GameObject lightningEffect;
     public GameObject gameOverPanel;
+    public GameObject QoLText;
 
     [Header("Настройки")]
     public float duration = 5f;
@@ -30,6 +31,7 @@ public class AbilitySpeed : MonoBehaviour
         _isUnlocked = PlayerPrefs.GetInt("SpeedAbility", 0) == 1;
 
         if (speedIcon) speedIcon.SetActive(_isUnlocked);
+        if (QoLText) QoLText.SetActive(_isUnlocked);
         ResetVisuals();
     }
 

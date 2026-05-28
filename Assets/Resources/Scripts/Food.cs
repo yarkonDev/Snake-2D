@@ -10,6 +10,10 @@ public class Food : MonoBehaviour
     public Sprite redAppleSprite;
     public Sprite goldAppleSprite;
 
+    [Header("Звук Золотого Яблока")]
+    public AudioSource audioSource;
+    public AudioClip goldenDingSound;
+
     private SpriteRenderer _spriteRenderer;
     private bool _isGolden = false;
 
@@ -78,9 +82,8 @@ public class Food : MonoBehaviour
             if (_isGolden)
             {
                 scoreManager.AddGoldApple();
+                audioSource.PlayOneShot(goldenDingSound);
             }
-
-
             RandomizePosition();
         }
     }

@@ -5,6 +5,7 @@ public class SnakeAI : MonoBehaviour
     [Header("Ссылки")]
     public SnakeMovement snake;
     public GameObject aiIcon;
+    public GameObject QoLText;
 
     public bool isUnlocked = false;
     public bool aiActive = false;
@@ -20,6 +21,8 @@ public class SnakeAI : MonoBehaviour
         {
             aiIcon.SetActive(isUnlocked);
         }
+        if (QoLText) QoLText.SetActive(isUnlocked);
+
     }
 
     void Update()

@@ -19,7 +19,7 @@ public class ShopTooltip : MonoBehaviour
         {
             descriptionText.text = message;
             tooltipPanel.SetActive(true);
-            tooltipPanel.transform.position = new Vector3(450, 100, 0);
+            tooltipPanel.transform.position = new Vector3(800, 200, 0);
             overlay.SetActive(true);
         }
     }

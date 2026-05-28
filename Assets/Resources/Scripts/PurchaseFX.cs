@@ -27,11 +27,13 @@ public class PurchaseFX : MonoBehaviour
         RectTransform rectTransform = GetComponent<RectTransform>();
         if (rectTransform != null)
         {
+            RectTransform parentRect = transform.parent as RectTransform;
             Canvas canvas = GetComponentInParent<Canvas>();
-            if (canvas != null)
+
+            if (parentRect != null && canvas != null)
             {
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    canvas.transform as RectTransform,
+                    parentRect,
                     mousePosition,
                     canvas.worldCamera,
                     out Vector2 localPoint
@@ -39,13 +41,10 @@ public class PurchaseFX : MonoBehaviour
                 rectTransform.anchoredPosition = localPoint;
             }
         }
-
         gameObject.SetActive(true);
-
         if (audioSource != null)
         {
             if (buySound != null) audioSource.PlayOneShot(buySound);
-
             if (laughSound != null) audioSource.PlayOneShot(laughSound);
         }
         int totalParticles = _particlesList.Count;
@@ -63,7 +62,10 @@ public class PurchaseFX : MonoBehaviour
     IEnumerator FlyParticle(RectTransform p, Vector2 dir)
     {
         Image img = p.GetComponent<Image>();
+
         p.anchoredPosition = Vector2.zero;
+        p.localRotation = Quaternion.identity;
+
         if (img != null) img.color = new Color(img.color.r, img.color.g, img.color.b, 1f);
 
         float duration = 0.6f;
@@ -76,6 +78,7 @@ public class PurchaseFX : MonoBehaviour
             float progress = elapsed / duration;
 
             p.anchoredPosition += dir * speed * Time.unscaledDeltaTime;
+
             p.Rotate(0, 0, Random.Range(400f, 700f) * Time.unscaledDeltaTime);
 
             if (img != null)
